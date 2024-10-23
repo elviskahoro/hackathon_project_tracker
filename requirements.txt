@@ -1,1 +1,7 @@
-reflex==0.6.3
+faker
+reflex>=0.6.3a2
+reflex-ag-grid
+polars
+yfinance==0.2.43
+docutils~=0.21.2
+PyGithub~=2.4.0

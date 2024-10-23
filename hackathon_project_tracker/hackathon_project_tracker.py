@@ -1,39 +1,24 @@
-"""Welcome to Reflex! This file outlines the steps to create a basic app."""
-
 import reflex as rx
 
-from rxconfig import config
+from .app_style import Style as AppStyle
+from .pages.project_tracker.page import index
+from .pages.project_tracker.state import State
+
+APP_STYLE: AppStyle = AppStyle()
 
 
-class State(rx.State):
-    """The app state."""
-
-    ...
-
-
-def index() -> rx.Component:
-    # Welcome Page (Index)
-    return rx.container(
-        rx.color_mode.button(position="top-right"),
-        rx.vstack(
-            rx.heading("Welcome to Reflex!", size="9"),
-            rx.text(
-                "Get started by editing ",
-                rx.code(f"{config.app_name}/{config.app_name}.py"),
-                size="5",
-            ),
-            rx.link(
-                rx.button("Check out our docs!"),
-                href="https://reflex.dev/docs/getting-started/introduction/",
-                is_external=True,
-            ),
-            spacing="5",
-            justify="center",
-            min_height="85vh",
-        ),
-        rx.logo(),
-    )
-
-
-app = rx.App()
-app.add_page(index)
+app = rx.App(
+    style=APP_STYLE.dark,
+    theme=rx.theme(
+        has_background=True,
+        radius="large",
+        accent_color="teal",
+    ),
+)
+app.add_page(
+    component=index(
+        placeholder_function=State.placeholder_function,
+    ),
+    route="/",
+    on_load=State.on_load,
+)
